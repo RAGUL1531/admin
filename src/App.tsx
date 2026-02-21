@@ -12,6 +12,8 @@ import ConsultationMonitoring from "./pages/ConsultationMonitoring";
 import ChatInterface from "./pages/ChatInterface";
 import AIAssistance from "./pages/AIAssistance";
 import NotFound from "./pages/NotFound";
+import DoctorChat from "./pages/DoctorChat";
+
 
 const queryClient = new QueryClient();
 
@@ -40,6 +42,7 @@ const App = () => (
                   <Route path="/chat" element={<ChatInterface />} />
                   <Route path="/ai" element={<AIAssistance />} />
                   <Route path="*" element={<NotFound />} />
+                  <Route path="/doctor-chat" element={<DoctorChat />} />            
                 </Routes>
               </div>
             </main>
