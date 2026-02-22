@@ -107,9 +107,11 @@ export default function DoctorChat() {
       alert('Call was rejected');
     });
 
-    // Listen for call ended
+    // Listen for call ended (fallback — VideoCall also listens and cleans up WebRTC)
     socketService.onCallEnded(() => {
       setInCall(false);
+      setSelectedPatient(null);
+      setIsCallInitiator(false);
     });
   };
 
