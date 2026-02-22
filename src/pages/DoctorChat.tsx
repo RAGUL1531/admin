@@ -25,6 +25,7 @@ export default function DoctorChat() {
   
   // Video call states
   const [inCall, setInCall] = useState(false);
+  const [isCallInitiator, setIsCallInitiator] = useState(false);
   const [incomingCall, setIncomingCall] = useState<{
     callerId: string;
     callerName: string;
@@ -57,6 +58,9 @@ export default function DoctorChat() {
     });
 
     setIsConnected(true);
+
+    // Register WebRTC listeners AFTER socket is connected
+    webRTCService.setupSocketListeners();
 
     // Listen for users update
     socketService.onUsersUpdate((updatedUsers) => {
@@ -92,10 +96,10 @@ export default function DoctorChat() {
       setIncomingCall(callData);
     });
 
-    // Listen for call accepted
-    socketService.onCallAccepted(({ recipientId }) => {
-      setInCall(true);
-      setSelectedPatient(patients.find(u => u.socketId === recipientId) || null);
+    // Listen for call accepted - caller is already in the call,
+    // so we don't need to update state here (selectedPatient was already set)
+    socketService.onCallAccepted(() => {
+      console.log('✅ Call accepted by recipient');
     });
 
     // Listen for call rejected
@@ -160,6 +164,7 @@ export default function DoctorChat() {
   const handleVideoCall = (patient: User) => {
     setSelectedPatient(patient);
     socketService.initiateCall(patient.socketId, 'video');
+    setIsCallInitiator(true);
     setInCall(true);
   };
 
@@ -179,6 +184,7 @@ export default function DoctorChat() {
     
     const caller = users.find(u => u.socketId === incomingCall.callerId);
     setSelectedPatient(caller || null);
+    setIsCallInitiator(false);
     setInCall(true);
     setIncomingCall(null);
   };
@@ -193,6 +199,7 @@ export default function DoctorChat() {
   const handleEndCall = () => {
     setInCall(false);
     setSelectedPatient(null);
+    setIsCallInitiator(false);
   };
 
   const filteredMessages = selectedPatient
@@ -239,6 +246,7 @@ export default function DoctorChat() {
       <VideoCall
         recipientId={selectedPatient.socketId}
         recipientName={selectedPatient.name}
+        isInitiator={isCallInitiator}
         onEndCall={handleEndCall}
       />
     );
