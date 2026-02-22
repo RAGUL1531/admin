@@ -25,7 +25,7 @@ export interface CallData {
 
 class SocketService {
   private socket: Socket | null = null;
-  private serverUrl = 'http://localhost:3001'; // Same server as paper-starter-kit
+  private serverUrl = 'http://192.168.1.8:3001'; // Same server as paper-starter-kit
 
   connect(userData: { name: string; avatar?: string; role?: 'doctor' | 'patient' }) {
     if (this.socket?.connected) {
