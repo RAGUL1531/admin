@@ -1,4 +1,4 @@
-import { LayoutDashboard, Users, Stethoscope, CalendarCheck, MessageCircle, Brain, Heart } from "lucide-react";
+import { LayoutDashboard, Users, Stethoscope, CalendarCheck, MessageCircle, Brain, Heart, Video } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useLocation } from "react-router-dom";
 import {
@@ -23,6 +23,7 @@ const mainItems = [
 
 const toolItems = [
   { title: "Chat Console", url: "/chat", icon: MessageCircle },
+  { title: "Doctor Chat", url: "/doctor-chat", icon: Video },
   { title: "AI Assistance", url: "/ai", icon: Brain },
 ];
 

@@ -41,8 +41,8 @@ const App = () => (
                   <Route path="/consultations" element={<ConsultationMonitoring />} />
                   <Route path="/chat" element={<ChatInterface />} />
                   <Route path="/ai" element={<AIAssistance />} />
+                  <Route path="/doctor-chat" element={<DoctorChat />} />
                   <Route path="*" element={<NotFound />} />
-                  <Route path="/doctor-chat" element={<DoctorChat />} />            
                 </Routes>
               </div>
             </main>
